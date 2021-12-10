@@ -7,7 +7,7 @@
 # # PBS -l select=1:ncpus=1:mem=1gb:scratch_local=4gb
 
 # add to qsub with:
-# qsub qsub_pyt_tutorial_quickstart.sh
+# qsub detectron2_tutorial.sh
 
 # nastaveni domovskeho adresare, v promenne $LOGNAME je ulozeno vase prihlasovaci jmeno
 LOGDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
@@ -26,13 +26,13 @@ cd $SCRATCHDIR || exit 1
 
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
 # vytvoreni adresaru na SCRATCHDIR
-mkdir $SCRATCHDIR/data/orig
-mkdir $SCRATCHDIR/data/processed
+mkdir -p $SCRATCHDIR/data/orig
+mkdir -p $SCRATCHDIR/data/processed
 
 # vytvoreni adresare processed v adresari DATADIR
-mkdir $DATADIR/processed
+mkdir -p $DATADIR/processed
 
-# kopirovani dat z DATADIR do SCRATCHDIR
+# kopirovani dat z DATADIR do SCRATCHDIR do data/orig
 cp $DATADIR $SCRATCHDIR/data/orig
 
 # spusteni aplikace - samotny vypocet
