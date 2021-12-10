@@ -26,14 +26,14 @@ cd $SCRATCHDIR || exit 1
 
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
 # vytvoreni adresaru na SCRATCHDIR
-mkdir -p $SCRATCHDIR/data/orig
+mkdir -p $SCRATCHDIR/data
 mkdir -p $SCRATCHDIR/data/processed
 
 # vytvoreni adresare processed v adresari DATADIR
 mkdir $DATADIR/processed
 
 # kopirovani dat z DATADIR do SCRATCHDIR do data/orig
-cp -r $DATADIR $SCRATCHDIR/data/orig
+cp -r $DATADIR $SCRATCHDIR/data
 
 # spusteni aplikace - samotny vypocet
 
