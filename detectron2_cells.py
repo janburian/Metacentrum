@@ -33,7 +33,7 @@ outputdir = Path(scratchdir) / 'data/processed/'
 
 
 from detectron2.data.datasets import register_coco_instances
-register_coco_instances("cells", {},  str(input_data_dir / "data/trainval.json"), str(input_data_dir / "data/images"))
+register_coco_instances("cells", {},  str(input_data_dir / "trainval.json"), str(input_data_dir / "images"))
 
 cells_metadata = MetadataCatalog.get("cells")
 dataset_dicts = DatasetCatalog.get("cells")
