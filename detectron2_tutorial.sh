@@ -57,5 +57,5 @@ python  $PROJECTDIR/detectron2_cells.py > results.txt
 ls
 # kopirovani vystupnich dat z vypocetnicho uzlu do domovskeho adresare,
 # pokud by pri kopirovani doslo k chybe, nebude adresar SCRATCH vymazan pro moznost rucniho vyzvednuti dat
-cp results.txt $LOGDIR || export CLEAN_SCRATCH=false
+cp results.txt $LOGDIR || export CLEAN_SCRATCH=true
 cp $SCRATCHDIR/data/processd $DATADIR/processed || export CLEAN_SCRATCH=false
