@@ -25,9 +25,9 @@ trap 'clean_scratch' TERM EXIT
 cd $SCRATCHDIR || exit 1
 
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
-mkdir -r $SCRATCHDIR/data/orig
-mkdir -r $SCRATCHDIR/data/processed
-mkdir -r $DATADIR/processed
+mkdir  $SCRATCHDIR/data/orig
+mkdir  $SCRATCHDIR/data/processed
+mkdir  $DATADIR/processed
 cp $DATADIR/orig $SCRATCHDIR/data/orig
 
 # spusteni aplikace - samotny vypocet
@@ -58,4 +58,4 @@ ls
 # kopirovani vystupnich dat z vypocetnicho uzlu do domovskeho adresare,
 # pokud by pri kopirovani doslo k chybe, nebude adresar SCRATCH vymazan pro moznost rucniho vyzvednuti dat
 cp results.txt $LOGDIR || export CLEAN_SCRATCH=true
-cp $SCRATCHDIR/data/processd $DATADIR/processed || export CLEAN_SCRATCH=false
+cp $SCRATCHDIR/data/processed $DATADIR/processed || export CLEAN_SCRATCH=false
