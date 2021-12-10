@@ -27,8 +27,8 @@ import os
 
 scratchdir = os.getenv('SCRATCHDIR', ".")
 
-input_data_dir = Path(scratchdir) / 'data/orig/'
-outputdir = Path(scratchdir) / 'data/processed/'
+input_data_dir = Path(scratchdir) + "/" + 'data/orig/'
+outputdir = Path(scratchdir) + "/" + 'data/processed/'
 
 
 
