@@ -38,7 +38,7 @@ module add conda-modules-py37
 module add gcc-8.3.0
 
 #source conda activate drawnUI-conda
-conda activate /storage/plzen1/home/$LOGNAME/.conda/envs/drawnUI-conda
+conda activate /storage/plzen1/home/$LOGNAME/miniconda3/envs/drawnUI-conda
 
 
 
