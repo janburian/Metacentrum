@@ -13,7 +13,6 @@ from detectron2.utils.logger import setup_logger
 setup_logger()
 
 # import some common libraries
-import matplotlib.pyplot as plt
 import numpy as np
 import cv2
 
@@ -39,15 +38,10 @@ register_coco_instances("cells", {},  str(input_data_dir / "data/trainval.json")
 cells_metadata = MetadataCatalog.get("cells")
 dataset_dicts = DatasetCatalog.get("cells")
 
-"""To verify the data loading is correct, let's visualize the annotations of randomly selected samples in the training set:
-
-
-"""
 
 import random
 
-#for d in random.sample(dataset_dicts, 3):
-for d in dataset_dicts:
+for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
     visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=0.5)
     vis = visualizer.draw_dataset_dict(d)
