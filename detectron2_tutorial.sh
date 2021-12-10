@@ -1,6 +1,6 @@
 #!/bin/bash
-#PBS -l select=1:ncpus=1:ngpus=2:mem=10gb:cl_konos=False:cl_gram=False:scratch_local=10gb
-#PBS -l walltime=01:00:00 -q gpu
+#PBS -l select=1:ncpus=1:ngpus=1:mem=8gb:cl_konos=False:cl_gram=False:scratch_local=10gb
+#PBS -l walltime=00:10:00 -q gpu
 # modify/delete the above given guidelines according to your job's needs
 # Please note that only one select= argument is allowed at a time.
 
@@ -26,14 +26,14 @@ cd $SCRATCHDIR || exit 1
 
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
 # vytvoreni adresaru na SCRATCHDIR
-mkdir  $SCRATCHDIR/data/orig
-mkdir  $SCRATCHDIR/data/processed
+mkdir -r $SCRATCHDIR/data/orig
+mkdir -r $SCRATCHDIR/data/processed
 
 # vytvoreni adresare processed v adresari DATADIR
-mkdir  $DATADIR/processed
+mkdir -r $DATADIR/processed
 
 # kopirovani dat z DATADIR do SCRATCHDIR
-cp $DATADIR $SCRATCHDIR/data/orig
+cp $DATADIR/orig $SCRATCHDIR/data/orig
 
 # spusteni aplikace - samotny vypocet
 
