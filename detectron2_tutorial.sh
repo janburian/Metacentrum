@@ -10,9 +10,9 @@
 # qsub qsub_pyt_tutorial_quickstart.sh
 
 # nastaveni domovskeho adresare, v promenne $LOGNAME je ulozeno vase prihlasovaci jmeno
-LOGDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/pytorch_quickstart/"
-PROJECTDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_quickstart/"
-DATADIR="/storage/plzen1/home/$LOGNAME/data/cocos2d/"
+LOGDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
+PROJECTDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
+DATADIR="/storage/plzen1/home/$LOGNAME/data/cells/"
 
 
 echo "job: $PBS_JOBID running on: `uname -n`"
@@ -52,7 +52,7 @@ export LANG=C.UTF-8
 
 
 # Put your code here
-python  $PROJECTDIR/pyt_tutorial_quickstart.py > results.txt
+python  $PROJECTDIR/detectron2_cells.py > results.txt
 
 ls
 # kopirovani vystupnich dat z vypocetnicho uzlu do domovskeho adresare,
