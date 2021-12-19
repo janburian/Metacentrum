@@ -27,13 +27,13 @@ from pathlib import Path
 import os
 
 scratchdir = os.getenv('SCRATCHDIR', ".")
-print("Scratchdir: " + Path(scratchdir).exists())
+print(Path(scratchdir).exists())
 
 input_data_dir = Path(scratchdir) / 'data/orig/'
-print("Input data dir:" + Path(input_data_dir).exists())
+print(Path(input_data_dir).exists())
 
 outputdir = Path(scratchdir) / 'data/processed/'
-print("Output data dir: " + Path(outputdir).exists())
+print(Path(outputdir).exists())
 
 
 from detectron2.data.datasets import register_coco_instances
