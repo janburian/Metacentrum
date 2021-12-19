@@ -26,17 +26,18 @@ cd $SCRATCHDIR || exit 1
 
 echo "scratchdir=$SCRATCHDIR"
 
-
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
 # vytvoreni adresaru na SCRATCHDIR
 mkdir -p "$SCRATCHDIR/data/orig"
 mkdir -p "$SCRATCHDIR/data/processed"
 
+ls -l
+
 # vytvoreni adresare processed v adresari DATADIR
 mkdir "$DATADIR/processed"
 
 # kopirovani dat z DATADIR do SCRATCHDIR do data/orig
-cp -r "$DATADIR" "$SCRATCHDIR/data/orig"
+cp -r $DATADIR "$SCRATCHDIR/data/orig"
 
 # spusteni aplikace - samotny vypocet
 
