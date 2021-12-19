@@ -10,9 +10,9 @@
 # qsub detectron2_tutorial.sh
 
 # nastaveni domovskeho adresare, v promenne $LOGNAME je ulozeno vase prihlasovaci jmeno
-LOGDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
-PROJECTDIR="/storage/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
-DATADIR="/storage/plzen1/home/$LOGNAME/data/cells/"
+LOGDIR="/auto/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
+PROJECTDIR="/auto/plzen1/home/$LOGNAME/projects/tutorials/metacentrum/detectron2_cells/"
+DATADIR="/auto/plzen1/home/$LOGNAME/data/cells/"
 
 
 echo "job: $PBS_JOBID running on: `uname -n`"
@@ -23,6 +23,8 @@ trap 'clean_scratch' TERM EXIT
 
 # vstup do adresare SCRATCH, nebo v pripade neuspechu ukonceni s chybovou hodnotou rovnou 1
 cd $SCRATCHDIR || exit 1
+
+echo "scratchdir=$SCRATCHDIR"
 
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
 # vytvoreni adresaru na SCRATCHDIR
@@ -43,7 +45,7 @@ module add conda-modules-py37
 module add gcc-8.3.0
 
 #source conda activate drawnUI-conda
-conda activate /storage/plzen1/home/$LOGNAME/miniconda3/envs/drawnUI-conda
+conda activate /auto/plzen1/home/$LOGNAME/miniconda3/envs/drawnUI-conda
 
 
 
