@@ -10,6 +10,7 @@
 # Setup detectron2 logger
 import detectron2
 from detectron2.utils.logger import setup_logger
+from pathlib import Path
 setup_logger()
 
 # import some common libraries
@@ -26,9 +27,13 @@ from pathlib import Path
 import os
 
 scratchdir = os.getenv('SCRATCHDIR', ".")
+print(Path(scratchdir).exists())
 
 input_data_dir = Path(scratchdir) / 'data/orig/'
+print(Path(input_data_dir).exists())
+
 outputdir = Path(scratchdir) / 'data/processed/'
+print(Path(outputdir).exists())
 
 
 
