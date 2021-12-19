@@ -36,7 +36,7 @@ mkdir -p "$SCRATCHDIR/data/processed"
 mkdir "$DATADIR/processed"
 
 # kopirovani dat z DATADIR do SCRATCHDIR do data/orig
-cp -r "$DATADIR" "$SCRATCHDIR/data/orig"
+cp "$DATADIR" "$SCRATCHDIR/data/orig"
 
 # spusteni aplikace - samotny vypocet
 
