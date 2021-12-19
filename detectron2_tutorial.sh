@@ -26,11 +26,6 @@ cd $SCRATCHDIR || exit 1
 
 echo "scratchdir=$SCRATCHDIR"
 
-echo "datadir=$DATADIR"
-echo "projectdir=$PROJECTDIR"
-echo "logdir=$LOGDIR"
-
-
 
 # priprava vstupnich dat (kopirovani dat na vypocetni uzel)
 # vytvoreni adresaru na SCRATCHDIR
