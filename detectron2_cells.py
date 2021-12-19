@@ -10,6 +10,7 @@
 # Setup detectron2 logger
 import detectron2
 from detectron2.utils.logger import setup_logger
+import os
 from pathlib import Path
 setup_logger()
 
@@ -28,12 +29,19 @@ import os
 
 scratchdir = os.getenv('SCRATCHDIR', ".")
 print(Path(scratchdir).exists())
+print(Path(scratchdir))
 
 input_data_dir = Path(scratchdir) / 'data/orig/'
 print(Path(input_data_dir).exists())
+print(Path(input_data_dir))
 
 outputdir = Path(scratchdir) / 'data/processed/'
 print(Path(outputdir).exists())
+print(Path(outputdir))
+
+trainval = Path(scratchdir) / 'data/orig/trainval.json'
+print(Path(trainval).exists())
+print(Path(trainval))
 
 
 from detectron2.data.datasets import register_coco_instances
