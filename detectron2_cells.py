@@ -31,7 +31,7 @@ scratchdir = os.getenv('SCRATCHDIR', ".")
 print(Path(scratchdir).exists())
 print(Path(scratchdir))
 
-input_data_dir = Path(scratchdir) / 'data/orig/'
+input_data_dir = Path(scratchdir) / 'data/orig/cells'
 print(Path(input_data_dir).exists())
 print(Path(input_data_dir))
 
@@ -39,10 +39,18 @@ outputdir = Path(scratchdir) / 'data/processed/'
 print(Path(outputdir).exists())
 print(Path(outputdir))
 
-trainval = Path(scratchdir) / 'data/orig/trainval.json'
+trainval = Path(scratchdir) / 'data/orig/cells/trainval.json'
 print(Path(trainval).exists())
 print(Path(trainval))
 
+# Get the list of all files and directories
+path = str(input_data_dir)
+dir_list = os.listdir(path)
+
+print("Files and directories in '", path, "' :")
+
+# prints all files
+print(dir_list)
 
 from detectron2.data.datasets import register_coco_instances
 register_coco_instances("cells", {},  str(input_data_dir / "trainval.json"), str(input_data_dir / "images"))
@@ -65,7 +73,8 @@ from detectron2.config import get_cfg
 import os
 
 cfg = get_cfg()
-cfg.merge_from_file("./detectron2_repo/configs/COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x.yaml")
+cfg.merge_from_file("/auto/plzen1/home/jburian/extern/detectron2/configs/COCO-InstanceSegmentation"
+                    "/mask_rcnn_R_50_FPN_3x.yaml")
 cfg.DATASETS.TRAIN = ("cells",)
 cfg.DATASETS.TEST = ()   # no metrics implemented for this dataset
 cfg.DATALOADER.NUM_WORKERS = 2

@@ -31,6 +31,7 @@ echo "scratchdir=$SCRATCHDIR"
 mkdir -p "$SCRATCHDIR/data/orig"
 mkdir -p "$SCRATCHDIR/data/processed"
 
+cd $SCRATCHDIR
 ls -l
 
 # vytvoreni adresare processed v adresari DATADIR
