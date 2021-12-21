@@ -58,6 +58,9 @@ register_coco_instances("cells", {},  str(input_data_dir / "trainval.json"), str
 cells_metadata = MetadataCatalog.get("cells")
 dataset_dicts = DatasetCatalog.get("cells")
 
+print()
+print(dataset_dicts)
+print()
 
 import random
 
@@ -88,6 +91,11 @@ cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # 1 class (cells)
 os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 trainer = DefaultTrainer(cfg)
 trainer.resume_or_load(resume=False)
+
+from pathlib import Path
+print("Obsah adresare outputdir: " + list(Path(outputdir).glob("**/*")))
+print("Obsah adresare inputtdir: " + list(Path(input_data_dir).glob("**/*")))
+
 trainer.train()
 
 
