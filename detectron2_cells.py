@@ -69,8 +69,14 @@ for d in dataset_dicts:
     visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=1)
     vis = visualizer.draw_dataset_dict(d)
     (outputdir / "vis_train").mkdir(parents=True, exist_ok=True)
-    if not cv2.imwrite(f'{outputdir / "vis_train" / d["file_name"]}', vis.get_image()[:, :, ::-1]):
-        raise Exception("Could not write image: " + d["file_name"])
+    print(Path(outputdir/"vis_train").exists())
+    print(Path((outputdir/"vis_train")))
+    img_name_final = os.path.basename(d["file_name"])
+    print(str(outputdir) + "/" + "vis_train" + "/" + img_name_final)
+    if not cv2.imwrite(str(outputdir) + "/" + "vis_train" + "/" + img_name_final, vis.get_image()[:, :, ::-1]):
+        raise Exception("Could not write image: " + img_name_final)
+
+
 
 from detectron2.engine import DefaultTrainer
 from detectron2.config import get_cfg
@@ -118,4 +124,6 @@ for d in dataset_dicts:
                    )
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     (outputdir / "vis_predictions").mkdir(parents=True, exist_ok=True)
-    cv2.imwrite(f'{outputdir / "vis_predictions" / d["file_name"]}', v.get_image()[:, :, ::-1])
+    img_name_final = os.path.basename(d["file_name"])
+    if not cv2.imwrite(str(outputdir) + "/" + "vis_predictions" + "/" + img_name_final, vis.get_image()[:, :, ::-1]):
+        raise Exception("Could not write image: " + img_name_final)
