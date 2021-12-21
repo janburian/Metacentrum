@@ -114,6 +114,7 @@ predictor = DefaultPredictor(cfg)
 # Prediction in picture
 from detectron2.utils.visualizer import ColorMode
 
+# TODO change directory
 for d in dataset_dicts:
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
@@ -125,5 +126,5 @@ for d in dataset_dicts:
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     (outputdir / "vis_predictions").mkdir(parents=True, exist_ok=True)
     img_name_final = os.path.basename(d["file_name"])
-    if not cv2.imwrite(str(outputdir) + "/" + "vis_predictions" + "/" + img_name_final, vis.get_image()[:, :, ::-1]):
+    if not cv2.imwrite(str(outputdir) + "/" + "vis_predictions" + "/" + img_name_final, v.get_image()[:, :, ::-1]):
         raise Exception("Could not write image: " + img_name_final)
