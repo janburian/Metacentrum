@@ -64,14 +64,13 @@ print()
 
 import random
 
-'''
-for d in random.sample(dataset_dicts, 3):
-    img = cv2.imread(d["file_name"])
-    visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=0.5)
-    vis = visualizer.draw_dataset_dict(d)
-    cv2.imwrite(f'{outputdir / "vis_train" / d["file_name"]}', vis.get_image()[:, :, ::-1])
 
-'''
+for d in dataset_dicts:
+    img = cv2.imread(d["file_name"])
+    visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=1)
+    vis = visualizer.draw_dataset_dict(d)
+    (outputdir / "vis_train").mkdir(parents=True, exist_ok=True)
+    cv2.imwrite(f'{outputdir / "vis_train" / d["file_name"]}', vis.get_image()[:, :, ::-1])
 
 
 from detectron2.engine import DefaultTrainer
@@ -108,9 +107,10 @@ cfg.DATASETS.TEST = ("cells", )
 predictor = DefaultPredictor(cfg)
 
 
+# Prediction in picture
 from detectron2.utils.visualizer import ColorMode
 
-for d in random.sample(dataset_dicts, 3):
+for d in dataset_dicts:
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
     v = Visualizer(im[:, :, ::-1],
