@@ -64,11 +64,14 @@ print()
 
 import random
 
+'''
 for d in random.sample(dataset_dicts, 3):
     img = cv2.imread(d["file_name"])
     visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=0.5)
     vis = visualizer.draw_dataset_dict(d)
     cv2.imwrite(f'{outputdir / "vis_train" / d["file_name"]}', vis.get_image()[:, :, ::-1])
+
+'''
 
 
 from detectron2.engine import DefaultTrainer
@@ -93,8 +96,8 @@ trainer = DefaultTrainer(cfg)
 trainer.resume_or_load(resume=False)
 
 from pathlib import Path
-print("Obsah adresare outputdir: " + list(Path(outputdir).glob("**/*")))
-print("Obsah adresare inputtdir: " + list(Path(input_data_dir).glob("**/*")))
+print("Obsah adresare outputdir: " + str(list(Path(outputdir).glob("**/*"))))
+print("Obsah adresare inputdir: " + str(list(Path(input_data_dir).glob("**/*"))))
 
 trainer.train()
 
@@ -108,7 +111,7 @@ predictor = DefaultPredictor(cfg)
 from detectron2.utils.visualizer import ColorMode
 
 for d in random.sample(dataset_dicts, 3):
-    im = cv2.imread(d["file-name"])
+    im = cv2.imread(d["file_name"])
     outputs = predictor(im)
     v = Visualizer(im[:, :, ::-1],
                     metadata=cells_metadata,
@@ -116,4 +119,5 @@ for d in random.sample(dataset_dicts, 3):
                     instance_mode=ColorMode.IMAGE_BW   # remove the colors of unsegmented pixels
     )
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    cv2.imwrite(f'{outputdir / "vis_predictions" / d["file_name"]}', vis.get_image()[:, :, ::-1])
+    (outputdir/"vis_predictions").mkdir(parents=True, exist_ok=True)
+    cv2.imwrite(f'{outputdir / "vis_predictions" / d["file_name"]}', v.get_image()[:, :, ::-1])
