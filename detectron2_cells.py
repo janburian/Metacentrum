@@ -114,7 +114,7 @@ predictor = DefaultPredictor(cfg)
 # Prediction in picture
 from detectron2.utils.visualizer import ColorMode
 
-# TODO change directory
+# TODO: change source directory of images for predictions
 for d in dataset_dicts:
     im = cv2.imread(d["file_name"])
     outputs = predictor(im)
