@@ -56,6 +56,7 @@ print(dir_list)
 from detectron2.data.datasets import register_coco_instances
 
 register_coco_instances("cells", {}, str(input_data_dir / "trainval.json"), str(input_data_dir / "images"))
+#register_coco_instances("cells_validation", {}, str(input_data_dir / "trainval.json"), str(input_data_dir / "images")) # TODO: Create validation dataset
 
 cells_metadata = MetadataCatalog.get("cells")
 dataset_dicts = DatasetCatalog.get("cells")
@@ -86,7 +87,7 @@ cfg = get_cfg()
 cfg.merge_from_file("/auto/plzen1/home/jburian/extern/detectron2/configs/COCO-InstanceSegmentation"
                     "/mask_rcnn_R_50_FPN_3x.yaml")
 cfg.DATASETS.TRAIN = ("cells",)
-cfg.DATASETS.TEST = ()  # no metrics implemented for this dataset
+cfg.DATASETS.TEST = ()  # no metrics implemented for this dataset, validation dataset
 cfg.DATALOADER.NUM_WORKERS = 2
 cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
 cfg.SOLVER.IMS_PER_BATCH = 2
