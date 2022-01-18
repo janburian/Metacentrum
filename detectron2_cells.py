@@ -32,9 +32,13 @@ scratchdir = os.getenv('SCRATCHDIR', ".")
 print(Path(scratchdir).exists())
 print(Path(scratchdir))
 
-input_data_dir = Path(scratchdir) / 'data/orig/cells'
-print(Path(input_data_dir).exists())
-print(Path(input_data_dir))
+input_data_dir_train = Path(scratchdir) / 'data/orig/cells/dataset_training'
+print(Path(input_data_dir_train).exists())
+print(Path(input_data_dir_train))
+
+input_data_dir_validate = Path(scratchdir) / 'data/orig/cells/dataset_validation'
+print(Path(input_data_dir_validate).exists())
+print(Path(input_data_dir_validate))
 
 outputdir = Path(scratchdir) / 'data/processed/'
 print(Path(outputdir).exists())
@@ -45,7 +49,7 @@ print(Path(trainval).exists())
 print(Path(trainval))
 
 # Get the list of all files and directories
-path = str(input_data_dir)
+path = str(input_data_dir_train)
 dir_list = os.listdir(path)
 
 print("Files and directories in '", path, "' :")
@@ -55,11 +59,11 @@ print(dir_list)
 
 from detectron2.data.datasets import register_coco_instances
 
-register_coco_instances("cells", {}, str(input_data_dir / "trainval.json"), str(input_data_dir / "images"))
-#register_coco_instances("cells_validation", {}, str(input_data_dir / "trainval.json"), str(input_data_dir / "images")) # TODO: Create validation dataset
+register_coco_instances("cells_training", {}, str(input_data_dir_train / "trainval.json"), str(input_data_dir_train / "images"))
+register_coco_instances("cells_validation", {}, str(input_data_dir_validate / "trainval.json"), str(input_data_dir_validate / "images")) # TODO: Create validation dataset
 
-cells_metadata = MetadataCatalog.get("cells")
-dataset_dicts = DatasetCatalog.get("cells")
+cells_metadata = MetadataCatalog.get("cells_training")
+dataset_dicts = DatasetCatalog.get("cells_training")
 
 print()
 print(dataset_dicts)
@@ -86,8 +90,8 @@ import os
 cfg = get_cfg()
 cfg.merge_from_file("/auto/plzen1/home/jburian/extern/detectron2/configs/COCO-InstanceSegmentation"
                     "/mask_rcnn_R_50_FPN_3x.yaml")
-cfg.DATASETS.TRAIN = ("cells",)
-cfg.DATASETS.TEST = ()  # no metrics implemented for this dataset, validation dataset
+cfg.DATASETS.TRAIN = ("cells_training")
+cfg.DATASETS.TEST = ("cells_validation")  # no metrics implemented for this dataset, validation dataset
 cfg.DATALOADER.NUM_WORKERS = 2
 cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
 cfg.SOLVER.IMS_PER_BATCH = 2
@@ -103,13 +107,13 @@ trainer.resume_or_load(resume=False)
 from pathlib import Path
 
 print("Obsah adresare outputdir: " + str(list(Path(outputdir).glob("**/*"))))
-print("Obsah adresare inputdir: " + str(list(Path(input_data_dir).glob("**/*"))))
+print("Obsah adresare inputdir: " + str(list(Path(input_data_dir_train).glob("**/*"))))
 
 trainer.train()
 
 cfg.MODEL.WEIGHTS = os.path.join(cfg.OUTPUT_DIR, "model_final.pth")
 cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set the testing threshold for this model
-cfg.DATASETS.TEST = ("cells",)
+cfg.DATASETS.TEST = ("cells_training",)
 predictor = DefaultPredictor(cfg)
 
 # Prediction in picture
