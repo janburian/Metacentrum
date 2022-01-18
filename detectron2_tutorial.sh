@@ -17,6 +17,7 @@ DATADIR="/auto/plzen1/home/$LOGNAME/data/cells/"
 
 echo "job: $PBS_JOBID running on: `uname -n`"
 
+lscpu
 
 # nastaveni automatickeho vymazani adresare SCRATCH pro pripad chyby pri behu ulohy
 trap 'clean_scratch' TERM EXIT
