@@ -40,13 +40,13 @@ input_data_dir_validate = Path(scratchdir) / 'data/orig/cells/dataset_validation
 print(Path(input_data_dir_validate).exists())
 print(Path(input_data_dir_validate))
 
+input_data_dir_predict = Path(scratchdir) / 'data/orig/cells/dataset_prediction'
+print(Path(input_data_dir_predict).exists())
+print(Path(input_data_dir_predict))
+
 outputdir = Path(scratchdir) / 'data/processed/'
 print(Path(outputdir).exists())
 print(Path(outputdir))
-
-trainval = Path(scratchdir) / 'data/orig/cells/trainval.json'
-print(Path(trainval).exists())
-print(Path(trainval))
 
 # Get the list of all files and directories
 path = str(input_data_dir_train)
@@ -116,12 +116,21 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set the testing threshold for thi
 cfg.DATASETS.TEST = ("cells_training",)
 predictor = DefaultPredictor(cfg)
 
-# Prediction in picture
+# Predictions in pictures
 from detectron2.utils.visualizer import ColorMode
+import glob
 
-# TODO: change source directory of images for predictions
-for d in dataset_dicts:
-    im = cv2.imread(d["file_name"])
+picture_predictions = glob.glob(str(input_data_dir_predict) + "/*.jpg")
+number_pictures_predictions = len(picture_predictions)
+
+print()
+print("Number of pictures for prediction: " + str(number_pictures_predictions))
+
+index = 0
+for d in range(number_pictures_predictions):
+    index_str = str(index)
+    #print("TEST: " + str(input_data_dir_predict) + "/" + index_str.zfill(4) + ".jpg")
+    im = cv2.imread(str(input_data_dir_predict) + "/" + index_str.zfill(4) + ".jpg")
     outputs = predictor(im)
     v = Visualizer(im[:, :, ::-1],
                    metadata=cells_metadata,
@@ -130,6 +139,7 @@ for d in dataset_dicts:
                    )
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
     (outputdir / "vis_predictions").mkdir(parents=True, exist_ok=True)
-    img_name_final = os.path.basename(d["file_name"])
+    img_name_final = "pic_pred_" + index_str.zfill(4) + ".jpg"
+    index += 1
     if not cv2.imwrite(str(outputdir) + "/" + "vis_predictions" + "/" + img_name_final, v.get_image()[:, :, ::-1]):
         raise Exception("Could not write image: " + img_name_final)
