@@ -44,9 +44,9 @@ input_data_dir_predict = Path(scratchdir) / 'data/orig/cells/dataset_prediction'
 print(Path(input_data_dir_predict).exists())
 print(Path(input_data_dir_predict))
 
-outputdir = Path(scratchdir) / 'data/processed/'
-print(Path(outputdir).exists())
-print(Path(outputdir))
+output_dir = Path(scratchdir) / 'data/processed/'
+print(Path(output_dir).exists())
+print(Path(output_dir))
 
 # Get the list of all files and directories
 path = str(input_data_dir_train)
@@ -73,12 +73,12 @@ for d in dataset_dicts:
     img = cv2.imread(d["file_name"])
     visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=1)
     vis = visualizer.draw_dataset_dict(d)
-    (outputdir / "vis_train").mkdir(parents=True, exist_ok=True)
-    print(Path(outputdir/"vis_train").exists())
-    print(Path((outputdir/"vis_train")))
+    (output_dir / "vis_train").mkdir(parents=True, exist_ok=True)
+    print(Path(output_dir / "vis_train").exists())
+    print(Path((output_dir / "vis_train")))
     img_name_final = os.path.basename(d["file_name"])
-    print(str(outputdir) + "/" + "vis_train" + "/" + img_name_final)
-    if not cv2.imwrite(str(outputdir) + "/" + "vis_train" + "/" + img_name_final, vis.get_image()[:, :, ::-1]):
+    print(str(output_dir) + "/" + "vis_train" + "/" + img_name_final)
+    if not cv2.imwrite(str(output_dir) + "/" + "vis_train" + "/" + img_name_final, vis.get_image()[:, :, ::-1]):
         raise Exception("Could not write image: " + img_name_final)
 
 
@@ -106,7 +106,7 @@ trainer.resume_or_load(resume=False)
 
 from pathlib import Path
 
-print("Obsah adresare outputdir: " + str(list(Path(outputdir).glob("**/*"))))
+print("Obsah adresare output_dir: " + str(list(Path(output_dir).glob("**/*"))))
 print("Obsah adresare inputdir: " + str(list(Path(input_data_dir_train).glob("**/*"))))
 
 trainer.train()
@@ -138,8 +138,8 @@ for d in range(number_pictures_predictions):
                    instance_mode=ColorMode.IMAGE_BW  # remove the colors of unsegmented pixels
                    )
     v = v.draw_instance_predictions(outputs["instances"].to("cpu"))
-    (outputdir / "vis_predictions").mkdir(parents=True, exist_ok=True)
+    (output_dir / "vis_predictions").mkdir(parents=True, exist_ok=True)
     img_name_final = "pic_pred_" + index_str.zfill(4) + ".jpg"
     index += 1
-    if not cv2.imwrite(str(outputdir) + "/" + "vis_predictions" + "/" + img_name_final, v.get_image()[:, :, ::-1]):
+    if not cv2.imwrite(str(output_dir) + "/" + "vis_predictions" + "/" + img_name_final, v.get_image()[:, :, ::-1]):
         raise Exception("Could not write image: " + img_name_final)
