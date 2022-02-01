@@ -1,10 +1,7 @@
-# -*- coding: utf-8 -*-
 # Detectron2 - cells.ipynb
-
 # Original file is located at https://colab.research.google.com/drive/1rCLduoeFC_UKN5MEKF77nvPVkbxOzt1x
 
 # **Usage of Detectron2**
-
 # Install detectron2
 # Some basic setup
 # Setup detectron2 logger
@@ -25,9 +22,12 @@ from detectron2.config import get_cfg
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog, DatasetCatalog
 
-from pathlib import Path
-import os
+import glob
 
+
+'''
+Obtaining directories and checking if exist
+'''
 scratchdir = os.getenv('SCRATCHDIR', ".")
 print(Path(scratchdir).exists())
 print(Path(scratchdir))
@@ -57,6 +57,10 @@ print("Files and directories in '", path, "' :")
 # prints all files
 print(dir_list)
 
+
+''' 
+Registering coco instances and getting metadata 
+'''
 from detectron2.data.datasets import register_coco_instances
 
 register_coco_instances("cells_training", {}, str(input_data_dir_train / "trainval.json"), str(input_data_dir_train / "images"))
@@ -69,6 +73,10 @@ print()
 print(dataset_dicts)
 print()
 
+
+'''
+Checking annotated pictures
+'''
 for d in dataset_dicts:
     img = cv2.imread(d["file_name"])
     visualizer = Visualizer(img[:, :, ::-1], metadata=cells_metadata, scale=1)
@@ -82,11 +90,13 @@ for d in dataset_dicts:
         raise Exception("Could not write image: " + img_name_final)
 
 
-
+'''
+Training 
+'''
 from detectron2.engine import DefaultTrainer
 from detectron2.config import get_cfg
-import os
 
+# Parameters
 cfg = get_cfg()
 cfg.merge_from_file("/auto/plzen1/home/jburian/extern/detectron2/configs/COCO-InstanceSegmentation"
                     "/mask_rcnn_R_50_FPN_3x.yaml")
@@ -104,8 +114,6 @@ os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
 trainer = DefaultTrainer(cfg)
 trainer.resume_or_load(resume=False)
 
-from pathlib import Path
-
 print("Obsah adresare output_dir: " + str(list(Path(output_dir).glob("**/*"))))
 print("Obsah adresare inputdir: " + str(list(Path(input_data_dir_train).glob("**/*"))))
 
@@ -116,9 +124,11 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set the testing threshold for thi
 cfg.DATASETS.TEST = ("cells_training",)
 predictor = DefaultPredictor(cfg)
 
-# Predictions in pictures
+
+'''
+Predictions in pictures
+'''
 from detectron2.utils.visualizer import ColorMode
-import glob
 
 picture_predictions = glob.glob(str(input_data_dir_predict) + "/*.jpg")
 number_pictures_predictions = len(picture_predictions)
