@@ -2,28 +2,22 @@
 # Original file is located at https://colab.research.google.com/drive/1rCLduoeFC_UKN5MEKF77nvPVkbxOzt1x
 
 # **Usage of Detectron2**
-# Install detectron2
-# Some basic setup
-# Setup detectron2 logger
 import detectron2
 from detectron2.utils.logger import setup_logger
-import os
-from pathlib import Path
-
-setup_logger()
-
-# import some common libraries
-import numpy as np
-import cv2
-
-# import some common detectron2 utilities
 from detectron2.engine import DefaultPredictor
 from detectron2.config import get_cfg
 from detectron2.utils.visualizer import Visualizer
 from detectron2.data import MetadataCatalog, DatasetCatalog
 
+# import some common libraries
+import numpy as np
+import cv2
 import glob
+import os
+from pathlib import Path
 
+
+setup_logger()
 
 '''
 Obtaining directories and checking if exist
