@@ -70,3 +70,4 @@ ls
 # pokud by pri kopirovani doslo k chybe, nebude adresar SCRATCH vymazan pro moznost rucniho vyzvednuti dat
 cp results.txt $LOGDIR || export CLEAN_SCRATCH=true
 cp -r $SCRATCHDIR/data/processed $DATADIR/processed || export CLEAN_SCRATCH=true
+cp -r $SCRATCHDIR/output $LOGDIR || export CLEAN_SCRATCH=true

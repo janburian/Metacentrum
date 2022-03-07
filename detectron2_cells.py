@@ -42,6 +42,8 @@ output_dir = Path(scratchdir) / 'data/processed/'
 print(Path(output_dir).exists())
 print(Path(output_dir))
 
+logs_dir = Path(scratchdir) / 'data'
+
 # Get the list of all files and directories
 path = str(input_data_dir_train)
 dir_list = os.listdir(path)
@@ -105,6 +107,8 @@ cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128  # faster, and good enough for th
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # 1 class (cells nuclei)
 
 os.makedirs(cfg.OUTPUT_DIR, exist_ok=True)
+print(os.path.abspath(cfg.OUTPUT_DIR))
+
 trainer = DefaultTrainer(cfg)
 trainer.resume_or_load(resume=False)
 
@@ -147,3 +151,4 @@ for d in range(number_pictures_predictions):
     index += 1
     if not cv2.imwrite(str(output_dir) + "/" + "vis_predictions" + "/" + img_name_final, v.get_image()[:, :, ::-1]):
         raise Exception("Could not write image: " + img_name_final)
+
