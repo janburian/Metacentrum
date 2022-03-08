@@ -101,8 +101,8 @@ cfg.DATASETS.TEST = ("cells_validation", )  # no metrics implemented for this da
 cfg.DATALOADER.NUM_WORKERS = 2
 cfg.MODEL.WEIGHTS = "detectron2://COCO-InstanceSegmentation/mask_rcnn_R_50_FPN_3x/137849600/model_final_f10217.pkl"  # initialize from model zoo
 cfg.SOLVER.IMS_PER_BATCH = 2
-cfg.SOLVER.BASE_LR = 0.02
-cfg.SOLVER.MAX_ITER = 60000
+cfg.SOLVER.BASE_LR = 0.000002
+cfg.SOLVER.MAX_ITER = 120000
 cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128  # faster, and good enough for this toy dataset
 cfg.MODEL.ROI_HEADS.NUM_CLASSES = 1  # 1 class (cells nuclei)
 
