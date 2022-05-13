@@ -122,6 +122,13 @@ cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5  # set the testing threshold for thi
 cfg.DATASETS.TEST = ("cells_training",)
 predictor = DefaultPredictor(cfg)
 
+from detectron2.evaluation import COCOEvaluator, inference_on_dataset
+from detectron2.data import build_detection_test_loader
+evaluator = COCOEvaluator("cells_validation", output_dir=cfg.OUTPUT_DIR)
+val_loader = build_detection_test_loader(cfg, "cells_validation")
+print(inference_on_dataset(predictor.model, val_loader, evaluator))
+# another equivalent way to evaluate the model is to use `trainer.test`
+
 
 '''
 Predictions in pictures
